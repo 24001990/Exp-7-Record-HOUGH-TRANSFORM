@@ -30,8 +30,8 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-gray = cv2.imread('god.png', cv2.IMREAD_GRAYSCALE)
-img_color = cv2.imread('god.png', cv2.IMREAD_COLOR)
+gray = cv2.imread('ham.png', cv2.IMREAD_GRAYSCALE)
+img_color = cv2.imread('ham.png', cv2.IMREAD_COLOR)
 img_c = cv2.cvtColor(img_color, cv2.COLOR_BGR2RGB)
 gray_rgb = cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
 
@@ -59,11 +59,13 @@ plt.show()
 ```
 # Display the result of Hough transform:
 ```
-lines = cv2.HoughLinesP(canny, 1, np.pi/180, threshold=80, minLineLength=50, maxLineGap=250)
+lines = cv2.HoughLinesP(canny, 1, np.pi/180, threshold=80,
+                        minLineLength=50, maxLineGap=250)
 
-for line in lines:
-    x1, y1, x2, y2 = line[0]
-    cv2.line(img_c, (x1, y1), (x2, y2), (255, 0, 0), 3)
+if lines is not None:
+    for line in lines:
+        x1, y1, x2, y2 = line
+        cv2.line(img_c, (x1, y1), (x2, y2), (255, 0, 0), 3)
 
 plt.imshow(img_c)
 plt.title("Result Image")
